@@ -11,6 +11,7 @@ from linebot.models import (
     FollowEvent, MessageEvent, TextMessage, TextSendMessage, ImageMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
 )
 import os
+import re
 
 # 軽量なウェブアプリケーションフレームワーク:Flask
 app = Flask(__name__)
@@ -49,21 +50,15 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text='登録したいのは何人？')
         )
-        if event.message.text.isdigit():
-            num_of_members = event.message.text
-            member_names = []
-            for i in range(0, num_of_people):
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text='str(num_of_people[i] + 1)'+'目の名前は？')
-                )
-                name[i] = event.message.text
-
-        else:
+    elif '人' in event.message.text:
+        num_of_members = re.subz(event.message.text)
+        member_names = []
+        for i in range(0, num_of_people):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text='数字のみを入力してくだい？')
+                TextSendMessage(text='str(num_of_people[i] + 1)'+'目の名前は？')
             )
+            name[i] = event.message.text
 
     else:
     	line_bot_api.reply_message(
