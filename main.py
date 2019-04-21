@@ -53,7 +53,7 @@ def callback():
 def handle_message(event):
     pattern=r'([0-9]*)'
     if '貸した' in event.message.text:
-        rending_temp = re.match(pattern,event.message.text)
+        rending_temp = re.findall(pattern,event.message.text)
         rending = int(rending_temp)
         sum = sum + rendig
         line_bot_api.reply_message(
@@ -61,7 +61,7 @@ def handle_message(event):
             TextSendMessage(text='計' + str(sum) + 'です')
         )
     elif '借りた' in event.message.text:
-        borrowing_temp = re.match(pattern,event.message.text)
+        borrowing_temp = re.findall(pattern,event.message.text)
         borrowing = int(borrowing_temp)
         sum = sum - borrowing
         line_bot_api.reply_message(
