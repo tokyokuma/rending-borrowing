@@ -54,7 +54,7 @@ def handle_message(event):
     pattern=r'([0-9]*)'
     if '貸した' in event.message.text:
         rending_temp = re.findall(pattern,event.message.text)
-        rending = int(rending_temp)
+        rending = int(rending_temp[0])
         sum = sum + rendig
         line_bot_api.reply_message(
             event.reply_token,
@@ -62,7 +62,7 @@ def handle_message(event):
         )
     elif '借りた' in event.message.text:
         borrowing_temp = re.findall(pattern,event.message.text)
-        borrowing = int(borrowing_temp)
+        borrowing = int(borrowing_temp[0])
         sum = sum - borrowing
         line_bot_api.reply_message(
             event.reply_token,
