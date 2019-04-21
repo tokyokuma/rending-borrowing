@@ -51,7 +51,7 @@ def handle_message(event):
             TextSendMessage(text='登録したいのは何人？')
         )
     elif '人' in event.message.text:
-        num_of_members = re.subz(event.message.text)
+        num_of_members = re.sub(event.message.text)
         member_names = []
         for i in range(0, num_of_people):
             line_bot_api.reply_message(
