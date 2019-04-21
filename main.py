@@ -59,7 +59,7 @@ def handle_message(event):
         for i in range(0, num_of_members):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=str(num_of_members - 1) + '人目の名前は？')
+                TextSendMessage(text=str(i + 1 ) + '人目の名前は？')
             )
             @handler.add(MessageEvent, message=TextMessage)
             def handle_message(event):
