@@ -52,14 +52,14 @@ def handle_message(event):
         )
     elif '人' in event.message.text:
         pattern = r'([+-]?[0-9]+\.?[0-9]*)'
-        num_of_members = re.match(pattern,event.message.text)
+        num_of_members = int(re.match(pattern,event.message.text))
         member_names = []
         for i in range(0, num_of_members):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text='str(num_of_members[i] + 1)'+'目の名前は？')
+                TextSendMessage(text='str(num_of_members + 1)'+'目の名前は？')
             )
-            name[i] = event.message.text
+            member_names[i] = event.message.text
 
     else:
     	line_bot_api.reply_message(
