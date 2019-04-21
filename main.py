@@ -58,7 +58,7 @@ def handle_message(event):
         for i in range(0, num_of_members):
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text='str(num_of_members + 1)'+'目の名前は？')
+                TextSendMessage(text=str(num_of_members + 1) + '目の名前は？')
             )
             member_names[i] = event.message.text
 
