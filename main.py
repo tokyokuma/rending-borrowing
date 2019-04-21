@@ -47,6 +47,8 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     pattern=r'([0-9]*)'
+    global sum
+    sum = 0
     if '貸した' in event.message.text:
         rending_temp = re.findall(pattern,event.message.text)
         rending = int(rending_temp[0])
@@ -71,11 +73,5 @@ def handle_message(event):
         )
 
 if __name__ == "__main__":
-    global rending
-    global borrowing
-    global sum
-    lending = 0
-    borrowing = 0
-    sum = 0
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
