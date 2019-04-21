@@ -34,7 +34,8 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-
+    global sum
+    sum = 0
     # handle webhook body
     try:
         handler.handle(body, signature)
@@ -47,8 +48,6 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     pattern=r'([0-9]*)'
-    global sum
-    sum = 0
     if '貸した' in event.message.text:
         rending_temp = re.findall(pattern,event.message.text)
         rending = int(rending_temp[0])
