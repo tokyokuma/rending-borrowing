@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # インポートするライブラリ
 from flask import Flask, request, abort
 
@@ -46,10 +44,14 @@ def callback():
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-	line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text='「' + event.message.text + '」って何？')
-     )
+    if '登録' in event.message.text:
+    	line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='「' + event.message.text + '」って何？')
+         )
+    else:
+        pass
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
