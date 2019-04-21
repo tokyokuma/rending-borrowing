@@ -56,8 +56,8 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text='str(num_of_people[i] + 1)'+'目の名前は？')
-                 )
-                 name[i] = event.message.text
+                )
+                name[i] = event.message.text
 
          else:
             line_bot_api.reply_message(
@@ -69,7 +69,7 @@ def handle_message(event):
     	line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text='「' + event.message.text + '」って何？')
-         )
+        )
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
