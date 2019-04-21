@@ -61,7 +61,7 @@ def handle_message(event):
                 event.reply_token,
                 TextSendMessage(text=str(num_of_members - 1) + '人目の名前は？')
             )
-            @handle.add(MessageEvent, message=TextMessage)
+            @handler.add(MessageEvent, message=TextMessage)
             def handle_message(event):
                 member_names.append(event.message.text)
 
