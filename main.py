@@ -55,7 +55,7 @@ def handle_message(event):
     if '貸した' in event.message.text:
         rending_temp = re.findall(pattern,event.message.text)
         rending = int(rending_temp[0])
-        sum = sum + rendig
+        sum = sum + rending
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text='計' + str(sum) + 'です')
