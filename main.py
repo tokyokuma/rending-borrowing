@@ -59,7 +59,7 @@ def handle_message(event):
                 )
                 name[i] = event.message.text
 
-         else:
+        else:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text='数字のみを入力してくだい？')
