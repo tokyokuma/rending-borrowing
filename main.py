@@ -24,12 +24,7 @@ LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
-global rending
-global borrowing
-global sum
-lending = 0
-borrowing = 0
-sum = 0
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -76,5 +71,11 @@ def handle_message(event):
         )
 
 if __name__ == "__main__":
+    global rending
+    global borrowing
+    global sum
+    lending = 0
+    borrowing = 0
+    sum = 0
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
