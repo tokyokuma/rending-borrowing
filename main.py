@@ -24,6 +24,12 @@ LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
+global rending
+global borrowing
+global sum
+lending = 0
+borrowing = 0
+sum = 0
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -45,25 +51,21 @@ def callback():
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if '登録' in event.message.text:
+    pattern=r'([0-9]*)'
+    if '貸した' in event.message.text:
+        rending = int(re.match(pattern,event.message.text))
+        sum = sum + rendig
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='登録したいのは何人？')
+            TextSendMessage(text='計' + str(sum) + 'です')
         )
-    elif '人' in event.message.text:
-        pattern=r'([0-9]*)'
-        num_of_members = re.match(pattern,event.message.text)
-        num_of_members = int(num_of_members[0])
-        global member_names
-        member_names = []
-        for i in range(0, num_of_members):
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=str(i + 1 ) + '人目の名前は？')
-            )
-            @handler.add(MessageEvent, message=TextMessage)
-            def handle_message(event):
-                member_names.append(event.message.text)
+    elif '借りた' in event.message.text:
+        borrowing = int(re.match(pattern,event.message.text))
+        sum = sum - borrowing
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='計' + str(sum) + 'です')
+        )
 
     else:
     	line_bot_api.reply_message(
