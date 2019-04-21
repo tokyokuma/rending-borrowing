@@ -54,6 +54,8 @@ def handle_message(event):
         pattern=r'([0-9]*)'
         num_of_members = re.match(pattern,event.message.text)
         num_of_members = int(num_of_members[0])
+        global member_names
+        member_names = [num_of_members]
         for i in range(0, num_of_members):
             line_bot_api.reply_message(
                 event.reply_token,
