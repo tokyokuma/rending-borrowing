@@ -55,13 +55,13 @@ def handle_message(event):
         num_of_members = re.match(pattern,event.message.text)
         num_of_members = int(num_of_members[0])
         global member_names
-        member_names = [num_of_members]
+        member_names = []
         for i in range(0, num_of_members):
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=str(num_of_members - 1) + '人目の名前は？')
             )
-            @handler.add(MessageEvent, message=TextMessage)
+            @handle.add(MessageEvent, message=TextMessage)
             def handle_message(event):
                 member_names.append(event.message.text)
 
