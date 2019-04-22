@@ -80,7 +80,15 @@ def handle_message(event):
         con.commit()
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='貸した目的は？')
+            TextSendMessage(text='借りた目的は？')
+        )
+
+    elif '状況' in.event.message.text:
+        cursor.execute('SELECT * FROM rent_borrow')
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=cursor[0][3])
         )
 
     else:
