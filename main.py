@@ -33,7 +33,7 @@ con = sqlite3.connect('./rentborrow.db')
 cursor = con.cursor()
 
 sql = "CREATE TABLE rent_borrow(date, id, rentborrow, amount, use);"
-cur.execute(sql)
+cursor.execute(sql)
 p = "INSERT INTO rent_borrow(date, id, rentborrow, amount, use) VALUES(?, ?, ?, ?, ?)"
 
 
