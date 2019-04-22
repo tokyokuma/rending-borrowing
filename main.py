@@ -30,7 +30,7 @@ line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 con = sqlite3.connect('./rentborrow.db')
-cur = con.cursor()
+cursor = con.cursor()
 
 sql = "CREATE TABLE rent_borrow(date, id, rentborrow, amount, use);"
 cur.execute(sql)
