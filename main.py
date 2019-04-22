@@ -73,6 +73,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text='貸した目的は？')
         )
+
     elif '借りた' in event.message.text:
         borrowing_temp = re.findall(pattern,event.message.text)
         borrowing = int(borrowing_temp[0])
@@ -83,9 +84,8 @@ def handle_message(event):
             TextSendMessage(text='借りた目的は？')
         )
 
-    elif '状況' in.event.message.text:
+    elif '状況' in event.message.text:
         cursor.execute('SELECT * FROM rent_borrow')
-
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=cursor[0][3])
