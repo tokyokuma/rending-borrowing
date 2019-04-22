@@ -86,9 +86,14 @@ def handle_message(event):
 
     elif '状況' in event.message.text:
         cursor.execute('SELECT * FROM rent_borrow')
+        sum = 0
+        for row in cursor:
+            sum = sum + row[3]
+
+        sum_str = str(sum)
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=cursor[0][3])
+            TextSendMessage(text=sum_str)
         )
 
     else:
