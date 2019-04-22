@@ -32,7 +32,7 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 con = sqlite3.connect('./rentborrow.db')
 cur = con.cursor()
 
-sql = "CREATE TABRE rent_borrow(date, id, rentborrow, amount, use);"
+sql = "CREATE TABLE rent_borrow(date, id, rentborrow, amount, use);"
 cur.execute(sql)
 p = "INSERT INTO rent_borrow(date, id, rentborrow, amount, use) VALUES(?, ?, ?, ?, ?)"
 
@@ -88,7 +88,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text='了解です')
         )
-    
+
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
