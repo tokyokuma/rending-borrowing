@@ -63,6 +63,7 @@ def handle_message(event):
     rent = 0
     borrow = 1
     use = event.message.text
+    sum = 0
 
     if '貸した' in event.message.text:
         rending_temp = re.findall(pattern,event.message.text)
@@ -86,7 +87,6 @@ def handle_message(event):
 
     elif '状況' in event.message.text:
         cursor.execute('SELECT * FROM rent_borrow')
-        sum = 0
         for row in cursor:
             if row[1] == profile.user_id:
                 if row[2] == 0:
