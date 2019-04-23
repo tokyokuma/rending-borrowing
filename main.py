@@ -60,9 +60,9 @@ def handle_message(event):
     profile = line_bot_api.get_profile(event.source.user_id)
     date = datetime.fromtimestamp(event.timestamp/1000.0)
     pattern=r'([0-9]*)'
-    rent = '貸した'
-    borrow = '借りた'
-    use = ''
+    rent = 0
+    borrow = 1
+    use = event.message.text
 
     if '貸した' in event.message.text:
         rending_temp = re.findall(pattern,event.message.text)
@@ -76,7 +76,7 @@ def handle_message(event):
 
     elif '借りた' in event.message.text:
         borrowing_temp = re.findall(pattern,event.message.text)
-        borrowing = int(borrowing_temp[0])
+        borrowing = int(borrowing_temp[0]) * (-1)
         cursor.execute(p, (date, profile.user_id, borrow, borrowing, use))
         con.commit()
         line_bot_api.reply_message(
@@ -88,20 +88,47 @@ def handle_message(event):
         cursor.execute('SELECT * FROM rent_borrow')
         sum = 0
         for row in cursor:
-            sum = sum + row[3]
+            if row[1] == profile.user_id:
+                if row[2] == 0:
+                    sum = sum + row[3]
+
+                elif row[2] == 1:
+                    sum = sum - row[3]
+
+            else:
+                if row[2] == 0:
+                    sum = sum - row[3]
+
+                elif row[2] == 1:
+                    sum = sum + row[3]
 
         sum_str = str(sum)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=sum_str)
-        )
+
+        if sum > 0:
+            situation = '円借りています'
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=sum_str + situation)
+            )
+        elif sum < 0:
+            situation = '円貸しています'
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=sum_str + situation)
+            )
+
+        else sum == 0:
+            situation = '現状貸し借りは0円です'
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=situation)
+            )
 
     else:
     	line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text='了解です')
         )
-
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
