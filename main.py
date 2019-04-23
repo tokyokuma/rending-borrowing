@@ -71,7 +71,7 @@ def handle_message(event):
         con.commit()
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='貸した目的は？')
+            TextSendMessage(text='貸したのですね、了解です')
         )
 
     elif '借りた' in event.message.text:
@@ -81,7 +81,7 @@ def handle_message(event):
         con.commit()
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='借りた目的は？')
+            TextSendMessage(text='借りたのですね、了解です')
         )
 
     elif '状況' in event.message.text:
@@ -105,19 +105,20 @@ def handle_message(event):
         sum_str = str(sum)
 
         if sum > 0:
-            situation = '円借りています'
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=sum_str + situation)
-            )
-        elif sum < 0:
             situation = '円貸しています'
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=sum_str + situation)
             )
 
-        else sum == 0:
+        elif sum < 0:
+            situation = '円借りています'
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=sum_str + situation)
+            )
+
+        elif sum == 0:
             situation = '現状貸し借りは0円です'
             line_bot_api.reply_message(
                 event.reply_token,
@@ -127,7 +128,7 @@ def handle_message(event):
     else:
     	line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='了解です')
+            TextSendMessage(text='知らない言葉は使わないで')
         )
 
 if __name__ == "__main__":
