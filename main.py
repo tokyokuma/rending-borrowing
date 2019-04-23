@@ -77,7 +77,7 @@ def handle_message(event):
 
     elif '借りた' in event.message.text:
         borrowing_temp = re.findall(pattern,event.message.text)
-        borrowing = int(borrowing_temp[0]) * (-1)
+        borrowing = int(borrowing_temp[0])
         cursor.execute(p, (date, profile.user_id, borrow, borrowing, use))
         con.commit()
         line_bot_api.reply_message(
