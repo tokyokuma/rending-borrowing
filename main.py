@@ -36,6 +36,11 @@ sql = "CREATE TABLE rent_borrow(date, id, rentborrow, amount, use);"
 cursor.execute(sql)
 p = "INSERT INTO rent_borrow(date, id, rentborrow, amount, use) VALUES(?, ?, ?, ?, ?)"
 
+def reply(reply_message):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_message)
+    )
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -125,11 +130,16 @@ def handle_message(event):
                 TextSendMessage(text=situation)
             )
 
-    else:
-        test = ['test1', 'test2']
+    elif '使い方' in event.message.text:
     	line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=test)
+            TextSendMessage(text='借りた例：焼肉で500借りた※金額の数字と借りたというワードは必ず入れてください。')
+        )
+
+    else:
+    	line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text='知らない言葉は使わないで')
         )
 
 if __name__ == "__main__":
