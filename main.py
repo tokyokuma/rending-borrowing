@@ -126,9 +126,10 @@ def handle_message(event):
             )
 
     else:
+        test = ['test1', 'test2']
     	line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='知らない言葉は使わないで')
+            TextSendMessage(text=test)
         )
 
 if __name__ == "__main__":
