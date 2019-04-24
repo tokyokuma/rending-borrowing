@@ -65,7 +65,7 @@ def handle_message(event):
 
     profile = line_bot_api.get_profile(event.source.user_id)
 
-    JST = timezone(timedelta(hours=+9), 'JST')
+
     today = datetime.date.today()
     todaydetail = datetime.datetime.today()
     date = todaydetail.strftime("%Y/%m/%d %H:%M")
