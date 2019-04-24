@@ -92,7 +92,7 @@ def handle_message(event):
     elif '状況' in event.message.text:
         cursor.execute('SELECT * FROM rent_borrow')
         for row in cursor:
-            if row[1] == profile.user_id:
+            if row[1] == profile.display_name:
                 if row[2] == 0:
                     sum = sum + row[3]
                 elif row[2] == 1:
