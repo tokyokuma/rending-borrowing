@@ -129,7 +129,10 @@ def handle_message(event):
         cursor.execute('SELECT * FROM rent_borrow')
         for row in cursor:
             for i in range(0,5):
-                message = message + str(row[i]) + ' '
+                if i == 2 or i == 3:
+                    pass
+                else:
+                    message = message + str(row[i]) + ' '
 
             message = message + '\n'
         reply_message(message)
