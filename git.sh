@@ -1,4 +1,4 @@
 #!/bin/sh
 git add -A
-git commit -am "ver0.2"
+git commit -am "ver1.0"
 git push heroku master
