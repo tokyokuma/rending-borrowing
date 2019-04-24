@@ -139,7 +139,8 @@ def handle_message(event):
 
     else:
         message = '知らない言葉は使わないで'
-
+        reply_message(message)
+        
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
