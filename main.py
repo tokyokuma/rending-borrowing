@@ -56,12 +56,13 @@ def callback():
 
 # MessageEvent
 @handler.add(MessageEvent, message=TextMessage)
+
 def reply(reply_message):
     line_bot_api.reply_message(
-    event.reply_token,
-    TextSendMessage(text=reply_message)
+        event.reply_token,
+        TextSendMessage(text=reply_message)
     )
-    
+
 def handle_message(event):
     profile = line_bot_api.get_profile(event.source.user_id)
     date = datetime.fromtimestamp(event.timestamp/1000.0)
