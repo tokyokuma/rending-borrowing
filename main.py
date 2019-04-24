@@ -74,7 +74,7 @@ def handle_message(event):
     if '貸した' in event.message.text:
         #rending_temp = re.findall(pattern,event.message.text)
         rending_temp = re.sub(r'\D', '' ,event.message.text)
-        rending = int(rending_temp[0])
+        rending = int(rending_temp)
         #cursor.execute(p, (date, profile.user_id, rent, rending, use))
         cursor.execute(p, (date, profile.display_name, rent, rending, use))
         con.commit()
@@ -84,7 +84,7 @@ def handle_message(event):
     elif '借りた' in event.message.text:
         #borrowing_temp = re.findall(pattern,event.message.text)
         borrowing_temp = re.sub(r'\D', '' ,event.message.text)
-        borrowing = int(borrowing_temp[0])
+        borrowing = int(borrowing_temp)
         #cursor.execute(p, (date, profile.user_id, rent, rending, use))
         cursor.execute(p, (date, profile.display_name, borrow, borrowing, use))
         con.commit()
