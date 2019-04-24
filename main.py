@@ -66,10 +66,8 @@ def handle_message(event):
     profile = line_bot_api.get_profile(event.source.user_id)
 
 
-    today = datetime.date.today()
-    todaydetail = datetime.datetime.today()
-    date = todaydetail.strftime("%Y/%m/%d %H:%M")
-
+    now = datetime.datetime.now()
+    date = '{0:%Y/%m/%d/%H:%M}'.format(now)
     rent = 0
     borrow = 1
     use = event.message.text
