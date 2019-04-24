@@ -2,7 +2,7 @@
 import os
 import re
 import sqlite3
-from datetime import datetime
+import datetime
 from flask import Flask, request, abort
 
 from linebot import (
@@ -65,9 +65,9 @@ def handle_message(event):
 
     profile = line_bot_api.get_profile(event.source.user_id)
 
-
     now = datetime.datetime.now()
     date = '{0:%Y/%m/%d/%H:%M}'.format(now)
+
     rent = 0
     borrow = 1
     use = event.message.text
