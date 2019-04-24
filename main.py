@@ -75,20 +75,16 @@ def handle_message(event):
         rending = int(rending_temp[0])
         cursor.execute(p, (date, profile.user_id, rent, rending, use))
         con.commit()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text='貸したのですね、了解です')
-        )
+        message = '貸したのですね、了解です'
+        reply_message(message)
 
     elif '借りた' in event.message.text:
         borrowing_temp = re.findall(pattern,event.message.text)
         borrowing = int(borrowing_temp[0])
         cursor.execute(p, (date, profile.user_id, borrow, borrowing, use))
         con.commit()
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text='借りたのですね、了解です')
-        )
+        message = '借りたのですね、了解です'
+        reply_message(message)
 
     elif '状況' in event.message.text:
         cursor.execute('SELECT * FROM rent_borrow')
@@ -96,51 +92,50 @@ def handle_message(event):
             if row[1] == profile.user_id:
                 if row[2] == 0:
                     sum = sum + row[3]
-
                 elif row[2] == 1:
                     sum = sum - row[3]
-
             else:
                 if row[2] == 0:
                     sum = sum - row[3]
-
                 elif row[2] == 1:
                     sum = sum + row[3]
 
-        sum_str = str(sum)
-
         if sum > 0:
+            sum_str = str(sum)
             situation = '円貸しています'
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=sum_str + situation)
-            )
+            message = sum_str + situation
+            reply_message(message)
 
         elif sum < 0:
+            sum = sum * (-1)
+            sum_str = str(sum)
             situation = '円借りています'
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=sum_str + situation)
-            )
+            message = sum_str + situation
+            reply_message(message)
 
         elif sum == 0:
-            situation = '現状貸し借りは0円です'
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=situation)
-            )
+            message = '現状貸し借りは0円です'
+            reply_message(message)
+
+    elif '履歴' in event.message.text:
+        message = ''
+        cursor.execute('SELECT * FROM rent_borrow')
+        for row in cursor:
+            for i in range(0,5):
+                message = message + str(row[i]) + ' '
+
+            message = message + '\n'
+        reply_message(message)
 
     elif '使い方' in event.message.text:
-    	line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text='借りた例：焼肉で500借りた※金額の数字と借りたというワードは必ず入れてください。')
-        )
+        message = '貸した例：焼肉で500借りた\n[半角で金額]＋[貸した]というワードは必ず入れてください\
+                   借りた例：焼肉で500借りた\n[半角で金額]＋[借りた]というワードは必ず入れてください\
+                   現在の状況確認：状況どうなってる？\n[状況]というワードを必ず入れてくだい\
+                   履歴確認：いままでの履歴見せて\n[]履歴]というワードを必ず入れてください'
+        reply_message(message)
 
     else:
-    	line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text='知らない言葉は使わないで')
-        )
+        message = '知らない言葉は使わないで'
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT"))
