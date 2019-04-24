@@ -3,7 +3,6 @@ import os
 import re
 import sqlite3
 from datetime import datetime
-from pytz import timezone
 from flask import Flask, request, abort
 
 from linebot import (
